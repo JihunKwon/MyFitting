@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+  <category>Matlab</category>
+  <title>Segment Blood Step</title>
+  <description><![CDATA[Perform a simple image processing and image statistics computation in Matlab.]]></description>
+  <version>0.0.0.1</version>
+  <documentation-url>http://www.slicer.org/slicerWiki/index.php/Documentation/Nightly/Extensions/MatlabBridge</documentation-url>
+  <license/>
+  <contributor>Andras Lasso (PerkLab)</contributor>
+  <acknowledgements><![CDATA[SparKit is a project funded by Cancer Care Ontarioand the Ontario Consortium for Adaptive Interventions in Radiation Oncology (OCAIRO) to provide free, open-source toolset for radiotherapy and related image-guided interventions.]]></acknowledgements>
+
+ <parameters>
+    <label>IO</label>
+    <description><![CDATA[Input/output parameters]]></description>
+    <image type="dynamic-contrast-enhanced">
+        <label>Input 4D Volume</label>
+        <longflag>input4Dvolume</longflag>
+        <channel>input</channel>
+        <description><![CDATA[Input 4D Image (txyz)]]></description>
+    </image>
+    <image type="label">
+      <label>Input ROI Exclusion Map</label>
+      <description><![CDATA[Input Template]]></description>
+      <longflag>inputEXROImap</longflag>
+      <channel>input</channel>
+    </image>
+    <image type="label">
+      <label>Input ROI Inclusion Map</label>
+      <description><![CDATA[Input Template]]></description>
+      <longflag>inputINCROImap</longflag>
+      <channel>input</channel>
+    </image>
+    <image type="label">
+      <label>Output Blood Map</label>
+      <description><![CDATA[Output filtered]]></description>
+      <longflag>outputlabelmap</longflag>
+      <channel>output</channel>
+    </image>
+    <string>
+            <name>filename</name>
+            <label>File Name to Save Data and Figure</label>
+            <channel>input</channel>
+            <default>ProstateBloodParams_</default>
+            <description><![CDATA[Data/Fig will be saved to this file name]]></description>
+            <flag>-c</flag>
+            <longflag>--filename</longflag>
+    </string>
+ </parameters>
+
+ <parameters>
+    <label>MRI Parameters</label>
+    <description><![CDATA[scan parameters]]></description>  
+    <string-enumeration>
+      <name>animal</name>
+      <flag>e</flag>
+      <longflag>animal</longflag>
+      <description>species</description>
+      <label>Animal</label>
+      <default>Human</default>
+      <element>Human</element>
+      <element>Rat</element>
+      <element>Mouse</element>
+    </string-enumeration>
+    <float-enumeration>
+      <label>Field Strength [T]</label>
+      <description>
+        <![CDATA[Field Strength]]>
+      </description>
+      <longflag>tesla</longflag>
+      <default>3</default>
+         <element>1.5</element>
+         <element>3</element>
+         <element>7</element>
+     </float-enumeration>
+    <float>
+      <label>Agent Relaxivity [l/(mmol*s)]</label>
+      <description>
+        <![CDATA[CA relaxivity]]>
+      </description>
+      <longflag>r1</longflag>
+      <default>3.7</default>
+      <constraints>
+             <minimum>2</minimum>
+             <maximum>15</maximum>
+             <step>0.1</step>
+      </constraints>
+     </float>
+   <integer>
+     <label>Blood Label Color Value</label>
+     <description>
+       <![CDATA[Voxels associated with blood will be set to this value]]>
+     </description>
+     <longflag>bloodlabelvalue</longflag>
+     <default>14</default>
+     <constraints>
+            <minimum>0</minimum>
+            <maximum>30</maximum>
+            <step>1</step>
+     </constraints>
+    </integer>
+  </parameters>
+  
+  <parameters>
+        <label>Output</label>
+        <description>Output</description>
+         <integer>
+            <label>Number of Pixels in ROI</label>
+            <description>
+                <![CDATA[Number of voxels in ROI]]>
+            </description>
+            <name>numpixelsROI</name>
+            <channel>output</channel>
+            <default></default>
+        </integer>
+        <integer>
+            <label>Number of Pixels in AIF</label>
+            <description>
+                <![CDATA[Number of voxels in AIF]]>
+            </description>
+            <name>numpixelsAIF</name>
+            <channel>output</channel>
+            <default></default>
+        </integer>           
+        <float>
+            <label>Flip Angle [degrees]</label>
+            <description>
+                <![CDATA[Flip Angle [degrees]]]>
+            </description>
+            <name>FA</name>
+            <channel>output</channel>
+            <default></default>
+        </float>
+        <float>
+            <label>Repetition Time [ms]</label>
+            <description>
+                <![CDATA[Repetition Time [ms]]]>
+            </description>
+            <name>TR</name>
+            <channel>output</channel>
+            <default></default>
+        </float>
+        <float>
+            <label>Frame Time [sec]</label>
+            <description>
+                <![CDATA[Frame Time [sec]]]>
+            </description>
+            <name>FT</name>
+            <channel>output</channel>
+            <default></default>
+        </float>
+        <integer>
+            <label>Number of Frames</label>
+            <description>
+                <![CDATA[Number of Frames]]>
+            </description>
+            <name>numframes</name>
+            <channel>output</channel>
+            <default></default>
+        </integer>
+    </parameters>
+</executable>
